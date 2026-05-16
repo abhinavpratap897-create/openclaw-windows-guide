@@ -12,8 +12,8 @@ This guide details the complete workflow, including every terminal command used,
 5. [Step 5: The Headless JSON Bypass (Fixing Connection Errors)](#-step-5-the-headless-json-bypass-fixing-connection-errors)
 6. [Step 6: Configure the Messaging Channel](#-step-6-configure-the-messaging-channel)
 7. [Step 7: Launch and Device Pairing](#-step-7-launch-and-device-pairing)
-8. [🔍 Why Standard Setup Often Fails on Windows](#-why-standard-setup-often-fails-on-windows)
-9. [🧼 Complete Purge & Uninstallation](#-complete-purge--uninstallation)
+8. [ Why Standard Setup Often Fails on Windows](#-why-standard-setup-often-fails-on-windows)
+9. [ Complete Purge & Uninstallation](#-complete-purge--uninstallation)
 
 ---
 
