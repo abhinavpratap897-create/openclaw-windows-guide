@@ -1,73 +1,111 @@
-# OpenClaw Native Windows Setup Guide: Local Ollama & Telegram Bot Integration
+A comprehensive, production-grade guide for installing, configuring, and troubleshooting the OpenClaw AI agent framework natively on Windows using a local Ollama inference server and a Telegram Bot interface.
 
-A complete, end-to-end installation and deployment guide for setting up the OpenClaw personal AI agent runtime natively on Windows using a 100% local Ollama inference engine and a private Telegram Bot interface.
+This guide details the complete workflow, including every terminal command used, interactive setup menu options, known Windows-specific bugs, and a step-by-step resolution process.
 
-This guide provides a manual, headless bypass for common Windows PowerShell onboarding freezes, parameter errors, and installer menu caching bugs.
+---
 
+## 📋 Table of Contents
+1. [Step 1: Install and Run Local Inference (Ollama)](#-step-1-install-and-run-local-inference-ollama)
+2. [Step 2: Create a Telegram Bot from Scratch](#-step-2-create-a-telegram-bot-from-scratch)
+3. [Step 3: Open an Administrator Shell and Prepare Files](#-step-3-open-an-administrator-shell-and-prepare-files)
+4. [Step 4: The Interactive Wizard (`openclaw onboard`)](#-step-4-the-interactive-wizard-openclaw-onboard)
+5. [Step 5: The Headless JSON Bypass (Fixing Connection Errors)](#-step-5-the-headless-json-bypass-fixing-connection-errors)
+6. [Step 6: Configure the Messaging Channel](#-step-6-configure-the-messaging-channel)
+7. [Step 7: Launch and Device Pairing](#-step-7-launch-and-device-pairing)
+8. [🔍 Why Standard Setup Often Fails on Windows](#-why-standard-setup-often-fails-on-windows)
+9. [🧼 Complete Purge & Uninstallation](#-complete-purge--uninstallation)
 
-##  Step 1: Install and Run Your Local LLM (Ollama)
+---
 
-OpenClaw requires an inference backbone. To protect your data privacy, we will run our models entirely offline on your local GPU/CPU hardware.
+##  Step 1: Install and Run Local Inference (Ollama)
 
-1. Download the native Windows installer from the official [Ollama Download Page](https://ollama.com).
-2. Execute the setup file and let the Ollama daemon initialize in your Windows system tray.
-3. Open a standard terminal window (Command Prompt or PowerShell) and pull the recommended lightweight model weight family:
+Before launching the agent runtime, you must establish an offline local LLM framework to handle training, reasoning, and system parsing securely on your own hardware.
+
+1. Go to the official [Ollama Download Page](https://ollama.com) and download the native Windows installer.
+2. Run the installer package and ensure the Ollama application initializes inside your Windows System Tray.
+3. Open a Windows terminal and pull the optimized lightweight model weights:
    ```cmd
    ollama pull llama3.2
 
 
-4. Verify your local server is running by opening your browser and visiting: `http://127.0.0.1:11434`. It should output: `"Ollama is running"`. Keep this terminal running or let the tray application manage it.
 
-
-##  Step 2: Create a Dedicated Telegram Bot from Scratch
-
-OpenClaw operates as a background service that chats with you through standard messaging platforms. Follow these steps to provision a completely private bot gateway:
-
-1. Open your Telegram app and type **`@BotFather`** into the search bar. Ensure it has the official blue verification checkmark.
-2. Click **Start** or send the command:text/newbot
+4. **Verify Localhost Availability:** Open your browser and go to `http://127.0.0.1:11434`. The screen must read **"Ollama is running"**.
 
 
 
-3. **Choose a Display Name:** Type any descriptive name you want for your AI assistant (e.g., `My Local Agent`).
-4. **Choose a Username:** Type a unique username that **must** end in `_bot` or `Bot` (e.g., `clawnative_assistant_bot`).
-5. **Secure Your Token:** BotFather will immediately generate an HTTP API Token. It will look similar to this:
+##  Step 2: Create a Telegram Bot from Scratch
+
+OpenClaw requires a communication medium to receive requests and return responses. Follow these steps to build your custom gateway interface:
+
+1. Open your Telegram client, click the search bar, and locate the official account: **`@BotFather`** (Look for the blue verification badge).
+2. Click **Start** or type the following initialization command:
+```text
+/newbot
+
+```
+
+
+3. **Set a Display Name:** When prompted, enter a friendly name for your assistant (e.g., `My Local Agent`).
+4. **Set a Username:** Choose a completely unique tag for your bot. **It must end in `_bot**` (e.g., `my_custom_openclaw_bot`).
+5. **Save the API Token:** BotFather will provide an HTTP API Token string that looks like this:
 ```text
 7182938475:AAH_ExampleTokenStringXyZ12345
 
 ```
 
 
-*Copy this token to your clipboard. Do not share this token or upload it publicly to GitHub.*
+*Copy this string to your clipboard. Keep it hidden—anyone with access to this token can control your bot.*
 
 ---
 
-##  Step 3: Clean Global Engine Installation
+##  Step 3: Open an Administrator Shell and Prepare Files
 
-1. Click on your Windows Start Menu, search for **PowerShell**.
-2. **Right-click** on *Windows PowerShell* and choose **Run as Administrator**.
-3. Execute the global installer command to fetch the latest stable framework build and overwrite any partial dependency errors:
+To perform software-wide installations, you must work out of an elevated shell environment.
+
+1. Open your Windows Start Menu, type **PowerShell**.
+2. Right-click on **Windows PowerShell** and select **Run as administrator**.
+3. Run the clean core framework engine installer globally using the Node Package Manager (`npm`):
 ```powershell
 npm install -g openclaw@latest --force
 
 ```
 
+##  Step 4: The Interactive Wizard (`openclaw onboard`)
 
+The application provides an automated user configuration assistant. Run the following command to initialize it:
+
+```powershell
+openclaw onboard
+
+```
+
+### Navigating the Interactive Prompt Tree:
+
+1. **Security Disclaimer:** Use your **Left Arrow Key** to highlight **`Yes`** and press **Enter**.
+2. **Setup Mode:** Choose **`Manual setup`** (or `QuickStart`) and press **Enter**.
+3. **What do you want to set up?:** Select **`Local gateway (this machine)`** and press **Enter**.
+4. **Gateway Defaults:** Press **Enter** to accept the default port (`18789`), bind address (`127.0.0.1`), and auth settings.
+5. **Model/Auth Provider:** Scroll down with your arrow keys, select **`More...`**, press **Enter**, locate **`Ollama (Cloud and local open models)`**, and press **Enter**.
+6. **Ollama Mode:** Choose **`Local only`** and press **Enter**.
 
 ---
 
-##  Step 4: The Headless Configuration Bypass (Crucial)
+##  Step 5: The Headless JSON Bypass (Fixing Connection Errors)
 
-> ⚠️ **Critical Bug Alert:** Running the interactive menu `openclaw onboard` natively on Windows contains an architecture bug that strings together character inputs, accidentally hardcoding broken, un-editable loop addresses like `http://127.0.0.1:11434llama3.2` into the persistent files. Bypassing the onboarding script via this manual file configuration is highly recommended.
+> ⚠️ **Critical Interactive Loop Error:** On native Windows systems, the interactive menu contains a parsing bug. During the `Ollama base URL` phase, it appends input strings incorrectly, saving a broken, corrupted localhost target into persistent system configurations (e.g., `http://127.0.0.1:11434llama3.2`). This triggers an endless loop error stating: *"Ollama could not be reached"*.
 
-1. In your Administrator PowerShell window, run this command to generate and open the framework configuration file directly in Windows Notepad:
+To fix this connection issue permanently, bypass the interactive prompt by formatting the raw configuration text directly:
+
+1. Terminate the locked onboarding session by pressing **`Ctrl + C`** inside your PowerShell terminal.
+2. Force-open the backend system configuration file using native Windows Notepad:
 ```powershell
 notepad "$env:USERPROFILE\.openclaw\openclaw.json"
 
 ```
 
 
-2. If Notepad prompts you to create a new file because it does not exist yet, select **Yes**.
-3. Copy and paste this structurally clean, verified JSON schema directly into the blank window:
+3. If Notepad alerts you that the file does not exist, click **Yes** to generate it.
+4. Wipe anything inside the document and paste this structurally clean, verified JSON blueprint:
 
 ```json
 {
@@ -87,72 +125,83 @@ notepad "$env:USERPROFILE\.openclaw\openclaw.json"
 
 ```
 
-4. Press **`Ctrl + S`** to save the changes, then close the Notepad window.
+5. Press **`Ctrl + S`** to save your changes, and close the Notepad window.
 
 ---
 
-## 🔌 Step 5: Link the Telegram Channel Workspace
+##  Step 6: Configure the Messaging Channel
 
-Now that the core model engine configurations are cleanly mapped, bind your messaging channel pathway:
+Now that your local machine's endpoint address (`127.0.0.1:11434`) is structurally sound, bind the Telegram bot gateway:
 
-1. Return to your blue PowerShell window and call the explicit configurations channel daemon:
+1. Execute the dedicated channel interface config command in PowerShell:
 ```powershell
 openclaw configure --section channels
 
 ```
 
 
-2. Choose **Telegram** from the rendered interactive terminal checklist.
-3. Paste the unique **HTTP API Token** you generated in **Step 2** from `@BotFather`.
-4. Save your workspace parameters and exit back to the main prompt.
+2. Highlight **Telegram** using your keyboard arrow keys and press **Enter**.
+3. Carefully paste your unique HTTP API Token generated in **Step 2** from `@BotFather`.
+4. Confirm, save your settings, and return to the main shell workspace prompt.
 
 ---
 
-## 🏁 Step 6: Initialize and Pair the Agent Session
+##  Step 7: Launch and Device Pairing
 
-Launch the background runtime engine:
+Initialize the core background processing environment:
 
 ```powershell
 openclaw start
 
 ```
 
-* **Authentication Code:** On the very first boot, the terminal console will generate a distinct **Pairing Code**.
-* Open Telegram, navigate to your custom bot username, press the **Start** button, and copy-paste that terminal pairing code straight into the chat window to authorize your device session.
+* **Pairing Your Chat Room:** Upon a clean launch, the PowerShell terminal will display a distinct **Pairing Code**.
+* Navigate back to Telegram, open your newly created custom bot channel, hit the **Start** button, paste the Pairing Code directly into the chat box, and send it. Your account is now bound as the secure administrator of your local agent.
 
 ---
 
-IF YOU WANT TO UNINSTALL OPENCLAW FOLLOW THIS 
+## 🔍 Why Standard Setup Often Fails on Windows
 
-## Total Clean Purge and Uninstallation
+If your environment froze, locked up, or crashed prior to following this guide, it is due to documented operating system compatibility quirks inside the tool layout:
 
-To completely wipe every trace of OpenClaw, its database files, local configuration folders, and automated system services from your system, run these lines sequentially in an Administrator PowerShell window:
+1. **PowerShell QuickEdit Thread Freezes:**
+By default, Windows PowerShell runs with **QuickEdit Mode** enabled. If you accidentally click your mouse anywhere inside the blue terminal area while text is processing, Windows halts the active script thread to let you select text. This causes the onboarding tool to freeze indefinitely until you press the **`Esc`** key on your keyboard to release the lock.
+2. **Interactive String Splicing Bugs:**
+The parameter verification parser inside `openclaw onboard` incorrectly flattens nested inputs on Windows, smashing base URLs and model names together into junk strings that break system routing.
+3. **Invalid Parameter Signatures:**
+Overwriting configurations directly inline using command parameters (e.g., `openclaw configure model.base_url http://...`) can trigger argument exceptions (`Too many arguments for this command`) on specific PowerShell versions due to string literal evaluation mismatches.
+
+---
+
+## 🧼 Complete Purge & Uninstallation
+
+If you ever need to completely remove every trace of this environment from your hardware, execute these commands sequentially inside an Administrator PowerShell window to ensure a clean sweep:
 
 ```powershell
-# 1. Force kill any stuck active background application threads
+# 1. Force terminate any active background application or agent worker processes
 Get-Process -Name "openclaw*" -ErrorAction SilentlyContinue | Stop-Process -Force
 
-# 2. Delete the automated Windows Scheduled Task service
+# 2. Erase the persistent Windows Scheduled Task background service
 schtasks /Delete /F /TN "OpenClaw Gateway"
 
-# 3. Uninstall the global npm package executable binaries
+# 3. Cleanly uninstall the global npm module binaries from your environment
 npm uninstall -g openclaw
 
-# 4. Recursively wipe the hidden configurations directory
+# 4. Recursively force-delete hidden app directories, databases, and cached configs
 Remove-Item -Recurse -Force "$env:USERPROFILE\.openclaw" -ErrorAction SilentlyContinue
 
 ```
 
-### Verification
+### Uninstall Verification Check
 
-Confirm that your machine is 100% clean by checking the binary command path:
+To prove your machine is completely clean of the environment, search for the binary entry point:
 
 ```powershell
 openclaw
 
 ```
 
-*Expected Clean Output:* `The term 'openclaw' is not recognized as the name of a cmdlet...`
+*Expected Pure Output:* `The term 'openclaw' is not recognized as the name of a cmdlet, function, script file, or operable program...`
 
 ```
 
